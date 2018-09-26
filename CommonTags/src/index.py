@@ -22,9 +22,9 @@ log.setLevel(logging.DEBUG)
 
 # Load data about resources supporting tags.
 # Do it outside of the handler to enable resuse.
-ROSOURCES_SUPPORTING_TAGS = []
+RESOURCES_SUPPORTING_TAGS = []
 with open('resources_supporting_tags.json') as f:
-    ROSOURCES_SUPPORTING_TAGS = json.load(f)
+    RESOURCES_SUPPORTING_TAGS = json.load(f)
 
 
 def handler(event, context):
@@ -55,7 +55,6 @@ def tag_resources(resources, tags):
 def add_tags_to_resource(resource, tags):
     if does_resource_support_tags(resource):
         resource_tags = resource['Properties'].get('Tags', [])
-        log.debug(json.dumps(resource_tags, indent=2))
         for tag in tags:
             if not is_tag_already_specified(tag, resource_tags):
                 tag_object = {
@@ -64,7 +63,6 @@ def add_tags_to_resource(resource, tags):
                 }
                 resource_tags.append(tag_object)
         resource['Properties']['Tags'] = resource_tags
-        log.debug(json.dumps(resource_tags, indent=2))
 
 
 def is_tag_already_specified(tag, resource_tags):
@@ -79,7 +77,7 @@ def does_resource_support_tags(resource):
     if 'Tags' in resource['Properties']:
         return True
 
-    if resource['Type'] in ROSOURCES_SUPPORTING_TAGS:
+    if resource['Type'] in RESOURCES_SUPPORTING_TAGS:
         return True
 
     return False
