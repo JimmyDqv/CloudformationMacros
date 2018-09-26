@@ -1,4 +1,4 @@
-# Macro RequiredTags
+# Macro CommonTags
   
 What is the problem that we try to solve with this macro?  
 It's really common that you want to add the same tag to all of your resources, it could be for cost allocation or similar.  
